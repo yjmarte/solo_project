@@ -1,0 +1,19 @@
+.dropdown-menu {
+  position: absolute;
+  left: inherit;
+  right: 0;
+  transform: translateX(-80%);
+  min-width: 300px !important;
+}
+
+.notification_amount {
+  top: 42%;
+  left: 50%;
+  font-weight: bold;
+  font-size: 8px;
+}
+
+/* Removing dropdown toggle caret */
+a.dropdown-toggle.nav-link::after {
+  content: none;
+}
