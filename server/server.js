@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const cloudinary = require("cloudinary").v2;
+const SocketServer = require("./socket.server");
 
 const app = express();
 
@@ -19,7 +20,15 @@ cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
-  secure: true
+  secure: true,
+});
+
+// SOCKET
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+
+io.on("connection", (socket) => {
+  SocketServer(socket);
 });
 
 // ROUTES
@@ -30,6 +39,6 @@ app.use("/api", require("./routes/notification.routes"));
 app.use("/api", require("./routes/comment.routes"));
 
 // INITIALIZE SERVER
-app.listen(process.env.PORT, () =>
+http.listen(process.env.PORT, () =>
   console.log(`Server initialized on port ${process.env.PORT}`)
 );
