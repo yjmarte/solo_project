@@ -49,7 +49,7 @@ const Info = ({ auth, dispatch, id, profile }) => {
             <h2>{user.name}</h2>
 
             <Row className="mt-3">
-              <Col lg={{ span: 2, offset: 1 }}>
+              <Col lg={{ span: 3, offset: 1 }}>
                 <span
                   onClick={() => setShowFollowers(true)}
                   className="text-primary"

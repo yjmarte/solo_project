@@ -4,7 +4,7 @@ export const showImage = (src, theme) => {
       src={src}
       alt="images"
       className="img-thumbnail"
-      style={{ filter: theme ? "invert(0)" : "invert(1)" }}
+      style={{ filter: theme ? "invert(1)" : "invert(0)" }}
     />
   );
 };
@@ -16,7 +16,7 @@ export const showVideo = (src, theme) => {
       src={src}
       alt="images"
       className="img-thumbnail"
-      style={{ filter: theme ? "invert(0)" : "invert(1)" }}
+      style={{ filter: theme ? "invert(1)" : "invert(0)" }}
     />
   );
 };

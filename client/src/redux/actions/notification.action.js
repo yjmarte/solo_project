@@ -6,7 +6,6 @@ export const NOTIFICATION_TYPES = {
   CREATE_NOTIFICATION: "CREATE_NOTIFICATION",
   UPDATE_NOTIFICATION: "UPDATE_NOTIFICATION",
   DELETE_NOTIFICATION: "DELETE_NOTIFICATION",
-  UPDATE_SOUND: "UPDATE_SOUND",
   DELETE_ALL_NOTIFICATIONS: "DELETE_ALL_NOTIFICATIONS",
 };
 
@@ -16,7 +15,7 @@ export const createNotification =
     try {
       const response = await postAPI("notification", message, auth.token);
 
-      socket.emit("CreateNotification", {
+      socket.emit("createNotification", {
         ...response.data.notification,
         user: {
           username: auth.user.username,
@@ -64,7 +63,7 @@ export const createNotification =
   export const deleteAllNotifications = (token) => async (dispatch) => {
       dispatch({ type: NOTIFICATION_TYPES.DELETE_ALL_NOTIFICATIONS, payload: []})
       try {
-          await deleteAPI('deleteAllNotifications', token)
+          await deleteAPI('notifications/delete', token)
       } catch (err) {
           dispatch({ type: GLOBAL_TYPES.ALERT, payload: { error: err.response.data.message }})
       }

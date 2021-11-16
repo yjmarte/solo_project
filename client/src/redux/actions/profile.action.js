@@ -78,7 +78,7 @@ export const updateProfileUser =
       if (avatar) media = await uploadImage([avatar]);
 
       const response = await patchAPI(
-        "user",
+        "profile",
         {
           ...userData,
           avatar: avatar ? media[0].url : auth.user.avatar,
@@ -137,7 +137,7 @@ export const follow =
 
     try {
       const response = await patchAPI(
-        `user/${user._id}/follow`,
+        `profile/${user._id}/follow`,
         null,
         auth.token
       );
@@ -155,7 +155,7 @@ export const follow =
     } catch (err) {
       dispatch({
         type: GLOBAL_TYPES.ALERT,
-        payload: { error: toast.error(err.response.data.message) },
+        payload: { error: toast.error(err) },
       });
     }
   };
@@ -195,8 +195,8 @@ export const unfollow =
     });
 
     try {
-      const res = await patchAPI(`user/${user._id}/unfollow`, null, auth.token);
-      socket.emit("unFollow", res.data.newUser);
+      const res = await patchAPI(`profile/${user._id}/unfollow`, null, auth.token);
+      socket.emit("unfollow", res.data.newUser);
 
       // Notify
       const message = {
@@ -208,9 +208,10 @@ export const unfollow =
 
       dispatch(deleteNotification({ message, auth, socket }));
     } catch (err) {
+      console.log(err);
       dispatch({
         type: GLOBAL_TYPES.ALERT,
-        payload: { error: toast.error(err.response.data.message) },
+        payload: { error: toast.error(err) },
       });
     }
   };

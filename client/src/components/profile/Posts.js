@@ -14,7 +14,6 @@ const Posts = ({ auth, dispatch, id, profile }) => {
   useEffect(() => {
     profile.posts.forEach((data) => {
       if (data._id === id) {
-          console.log(auth.token);
         setPosts(data.posts);
         setResult(data.result);
         setPage(data.page);

@@ -176,13 +176,14 @@ const StatusModal = () => {
               />
             </Col>
           </Row>
+          <Modal.Footer className="status_footer">
+            <Button variant="secondary" className="w-100" type="submit">
+              Post
+            </Button>
+          </Modal.Footer>
+          
         </Form>
       </Modal.Body>
-      <Modal.Footer className="status_footer">
-        <Button variant="secondary" className="w-100" type="submit">
-          Post
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 };

@@ -1,19 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { Chat, Heart } from "react-bootstrap-icons";
 import SendSVG from "../images/send.svg";
-import { Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 const PostThumb = ({ posts, result }) => {
-  const { theme } = useSelector((state) => state);
-
   if (result === 0)
     return <h2 className="text-center text-danger">No Posts</h2>;
 
   return (
-    <Row>
-      {posts.map((post) => {
+    <Row className="mt-5">
+      <Col>
+      {posts.map((post) => (
         <Link key={post._id} to={`/post/${post._id}`}>
           <Row>
             {post.images[0].url.match(/video/i) ? (
@@ -33,8 +31,9 @@ const PostThumb = ({ posts, result }) => {
               <img src={SendSVG} alt="send" />
             </Row>
           </Row>
-        </Link>;
-      })}
+        </Link>
+      ))}
+      </Col>
     </Row>
   );
 };

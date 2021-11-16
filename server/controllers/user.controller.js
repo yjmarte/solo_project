@@ -37,11 +37,6 @@ const UserController = {
   update: async (req, res) => {
     try {
       const { avatar, name, bio } = req.body;
-      const result = await cloudinary.uploader.upload(avatar, {
-        folder: "avatars",
-        width: "",
-        crop: "scale",
-      });
 
       if (!name)
         return res.status(400).json({ message: "Please add your name." });
@@ -49,13 +44,13 @@ const UserController = {
       await User.findOneAndUpdate(
         { _id: req.user._id },
         {
-          avatar: result.secure_url,
+          avatar,
           name,
           bio,
         }
       );
 
-      res.json({ message: "Update successful." });
+      return res.json({ message: "Update successful." });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
@@ -95,7 +90,7 @@ const UserController = {
         { new: true }
       );
 
-      res.json({ newUser });
+      return res.json({ newUser });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
@@ -120,7 +115,7 @@ const UserController = {
         { new: true }
       );
 
-      res.json({ newUser });
+      return res.json({ newUser });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }

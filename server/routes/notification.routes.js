@@ -7,7 +7,7 @@ Router.delete("/notification/:id", auth, NotificationController.delete);
 Router.get("/notifications", auth, NotificationController.get);
 Router.patch("/notification/:id", auth, NotificationController.read);
 Router.delete(
-  "/deleteAllNotifications",
+  "/notifications/delete",
   auth,
   NotificationController.deleteAll
 );

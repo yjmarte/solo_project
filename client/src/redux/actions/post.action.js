@@ -38,6 +38,7 @@ export const createPost =
         content,
         image: media[0].url,
       };
+      
       dispatch(createNotification({ message, auth, socket }));
     } catch (err) {
       dispatch({

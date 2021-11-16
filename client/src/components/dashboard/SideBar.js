@@ -30,11 +30,11 @@ const SideBar = () => {
         <img src={LoadingIcon} alt="loading" className="d-block mx-auto my-4" />
       ) : (
         <div className="suggestions">
-          {suggestions.users.map((user) => {
+          {suggestions.users.map((user) => (
             <UserCard key={user._id} user={user}>
               <FollowButton user={user} />
-            </UserCard>;
-          })}
+            </UserCard>
+          ))}
         </div>
       )}
     </div>

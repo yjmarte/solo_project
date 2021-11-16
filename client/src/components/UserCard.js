@@ -15,7 +15,7 @@ const UserCard = ({
   message,
 }) => {
   const { auth, theme } = useSelector((state) => state);
-  const avatar = auth.user.avatar ? auth.user.avatar : avatarSVG
+  const avatar = user.avatar ? user.avatar : avatarSVG
 
   const handleCloseAll = () => {
     if (handleClose) handleClose();

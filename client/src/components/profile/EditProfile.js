@@ -4,8 +4,8 @@ import { checkImage } from "../../redux/utilities/upload.image";
 import { GLOBAL_TYPES } from "../../redux/actions/global.types";
 import { updateProfileUser } from "../../redux/actions/profile.action";
 import { toast } from "react-toastify";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import avatarSVG from '../../images/person-circle.svg'
+import { Button, Col, Form, Modal } from "react-bootstrap";
+import avatarSVG from "../../images/person-circle.svg";
 
 const EditProfile = ({ setOnEdit }) => {
   const initialState = {
@@ -17,7 +17,7 @@ const EditProfile = ({ setOnEdit }) => {
 
   const [avatar, setAvatar] = useState("");
 
-  const { auth, theme } = useSelector((state) => state);
+  const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const EditProfile = ({ setOnEdit }) => {
     if (err)
       return dispatch({
         type: GLOBAL_TYPES.ALERT,
-        payload: { error: toast.error(err) },
+        payload: { error: toast.error(err.message) },
       });
 
     setAvatar(file);
@@ -45,7 +45,7 @@ const EditProfile = ({ setOnEdit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProfileUser({ userData, avatar, auth }));
+    dispatch(updateProfileUser({userData, avatar, auth}));
   };
 
   return (
@@ -55,33 +55,58 @@ const EditProfile = ({ setOnEdit }) => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="position-relative mt-5">
-            <Col lg={{ span: 4, offset: 4}} className="d-flex-column align-items-center justify-content-center">
-            <img
-              src={avatar ? URL.createObjectURL(avatar) : avatarSwitch}
-              alt="avatar"
-              className="huge-avatar position-absolute top-50 start-50 translate-middle"
-            />
-            <span>
-              <i className="fas fa-camera" />
-              <p>Change</p>
-              <Form.Control
-                type="file"
-                name="file"
-                id="file_up"
-                accept="image/*"
-                onChange={changeAvatar}
-                className="position-absolute top-0 start-0 w-100 h-100 invisible py-5"
+          <Form.Group className="position-relative my-5 py-5">
+            <Col
+              lg={{ span: 4, offset: 4 }}
+              className="d-flex-column align-items-center justify-content-center"
+            >
+              <img
+                src={avatar ? URL.createObjectURL(avatar) : avatarSwitch}
+                alt="avatar"
+                className="huge-avatar position-absolute top-50 start-50 translate-middle"
               />
-            </span>
+                <Form.Control
+                  type="file"
+                  name="file"
+                  id="file_up"
+                  accept="image/*"
+                  onChange={changeAvatar}
+                  className="position-absolute top-50 start-0 w-100 h-100 opacity-0 py-5"
+                />
             </Col>
           </Form.Group>
-        </Form>
-        <Modal.Footer className="status_footer">
+
+          <Form.Group className="mt-5">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              value={name}
+              onChange={handleInput}
+            />
+            <small className={ name.length > 30 ? "text-danger" : "text-success"}>
+              {name.length} / 30
+            </small>
+          </Form.Group>
+
+          <Form.Group className="mt-5">
+            <Form.Label>Bio</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="bio"
+              value={bio}
+              onChange={handleInput}
+            />
+            <small className={ bio.length > 150 ? "text-danger" : "text-success"}>
+              {bio.length} / 150
+            </small>
+          </Form.Group>
+          <Form.Group className="mt-5">
           <Button variant="secondary" className="w-100" type="submit">
             Post
           </Button>
-        </Modal.Footer>
+        </Form.Group>
+        </Form>
       </Modal.Body>
     </Modal>
   );
