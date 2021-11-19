@@ -127,6 +127,8 @@ const UserController = {
       const newArr = [...req.user.following, req.user._id];
       const num = req.query.num || 10;
 
+      console.log("New Array : ", newArr);
+
       const users = await User.aggregate([
         { $match: { _id: { $nin: newArr } } },
         { $sample: { size: Number(num) } },
@@ -147,6 +149,8 @@ const UserController = {
           },
         },
       ]).project("-password");
+
+      // console.log(users);
 
       return res.json({
         users,

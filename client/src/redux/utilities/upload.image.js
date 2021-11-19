@@ -40,6 +40,36 @@ export const uploadImage = async (images) => {
     );
 
     const file = await response.json();
+    console.log(file);
+    imageArr.push({ public_id: file.public_id, url: file.secure_url });
+  }
+  return imageArr;
+};
+
+export const uploadAvatar = async (images) => {
+  let imageArr = [];
+
+  for (const item of images) {
+    const form = new FormData();
+
+    if (item.camera) {
+      form.append("file", item.camera);
+    } else {
+      form.append("file", item);
+    }
+
+    form.append("upload_preset", "inract_avi_");
+    form.append("cloud_name", "inract");
+
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/inract/image/upload",
+      {
+        method: "POST",
+        body: form,
+      }
+    );
+
+    const file = await response.json();
     imageArr.push({ public_id: file.public_id, url: file.secure_url });
   }
   return imageArr;

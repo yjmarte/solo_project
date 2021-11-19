@@ -12,7 +12,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 const persistConfig = {
   key: "theme",
   storage,
-  blacklist: ['alert', 'auth', 'notification', 'dashboardPosts', 'modal', 'status', 'postDetail', 'profile', 'suggestions']
+  blacklist: ['alert', 'auth', 'notification', 'dashboardPosts', 'modal', 'socket', 'status', 'postDetail', 'profile', 'suggestions']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

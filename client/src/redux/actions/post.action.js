@@ -229,7 +229,7 @@ export const savePost =
     } catch (err) {
       dispatch({
         type: GLOBAL_TYPES.ALERT,
-        payload: { error: toast.error(err.response.data.nessage) },
+        payload: { error: toast.error(err.response.data.message) },
       });
     }
   };

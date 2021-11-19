@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GLOBAL_TYPES } from "./redux/actions/global.types";
-import { MESSAGE_TYPES } from "./redux/actions/message.action";
+// import { MESSAGE_TYPES } from "./redux/actions/message.action";
 import { NOTIFICATION_TYPES } from "./redux/actions/notification.action";
 import { POST_TYPES } from "./redux/actions/post.action";
 

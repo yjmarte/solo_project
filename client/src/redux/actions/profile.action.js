@@ -1,6 +1,6 @@
 import { GLOBAL_TYPES, DeleteData } from "./global.types";
 import { getAPI, patchAPI } from "../utilities/fetch.api";
-import { uploadImage } from "../utilities/upload.image";
+import { uploadAvatar } from "../utilities/upload.image";
 import {
   createNotification,
   deleteNotification,
@@ -24,7 +24,7 @@ export const getProfileUsers =
 
     try {
       dispatch({ type: PROFILE_TYPES.LOADING, payload: true });
-      
+
       const response = getAPI(`profile/${id}`, auth.token);
       const response1 = getAPI(`user_posts/${id}`, auth.token);
 
@@ -75,7 +75,7 @@ export const updateProfileUser =
       let media;
       dispatch({ type: GLOBAL_TYPES.ALERT, payload: { loading: true } });
 
-      if (avatar) media = await uploadImage([avatar]);
+      if (avatar) media = await uploadAvatar([avatar]);
 
       const response = await patchAPI(
         "profile",
@@ -195,7 +195,11 @@ export const unfollow =
     });
 
     try {
-      const res = await patchAPI(`profile/${user._id}/unfollow`, null, auth.token);
+      const res = await patchAPI(
+        `profile/${user._id}/unfollow`,
+        null,
+        auth.token
+      );
       socket.emit("unfollow", res.data.newUser);
 
       // Notify

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Carousel, Col } from "react-bootstrap";
 
 import Avatar from "./Avatar";
@@ -10,6 +10,10 @@ import { deletePost } from "../redux/actions/post.action";
 import { BASE_URL } from "../redux/utilities/config";
 import avatarSVG from "../images/person-circle.svg";
 
+import LikeButton from './LikeButton'
+import { likePost, unlikePost, savePost, unsavePost } from "../redux/actions/post.action";
+import { Bookmark, BookmarkFill } from "react-bootstrap-icons";
+
 const PostCard = ({ post, theme }) => {
   const { auth, socket } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -19,6 +23,63 @@ const PostCard = ({ post, theme }) => {
   const history = useHistory();
 
   const avatar = post.user.avatar ? post.user.avatar : avatarSVG;
+
+  const [isLike, setIsLike] = useState(false)
+  const [loadLike, setLoadLike] = useState(false)
+
+  const [isShare, setIsShare] = useState(false)
+
+  const [saved, setSaved] = useState(false)
+  const [saveLoad, setSaveLoad] = useState(false)
+
+  // Likes
+  useEffect(() => {
+    if(post.likes.find(like => like._id === auth.user._id)) {
+      setIsLike(true)
+    } else {
+      setIsLike(false)
+    }
+  }, [post.likes, auth.user._id])
+
+  const handleLike = async () => {
+    if (loadLike) return;
+
+    setLoadLike(true)
+    await dispatch(likePost({ post, auth, socket }))
+    setLoadLike(false)
+  }
+
+  const handleUnlike = async () => {
+    if (loadLike) return;
+
+    setLoadLike(true)
+    await dispatch(unlikePost({ post, auth, socket }))
+    setLoadLike(false)
+  }
+
+  useEffect(() => {
+    if(auth.user.saved.find(id => id === post._id)) {
+      setSaved(true)
+    } else {
+      setSaved(false)
+    }
+  }, auth.user.saved, post._id)
+
+  const handleSavePost = async () => {
+    if (saveLoad) return;
+
+    setSaveLoad(true);
+    await dispatch(savePost({ post, auth }))
+    setSaveLoad(false)
+  }
+
+  const handleUnsavePost = async () => {
+    if (saveLoad) return;
+
+    setSaveLoad(true);
+    await dispatch(unsavePost({ post, auth }))
+    setSaveLoad(false)
+  }
 
   const handleEditPost = () => {
     dispatch({ type: GLOBAL_TYPES.STATUS, payload: { ...post, onEdit: true } });
@@ -84,7 +145,13 @@ const PostCard = ({ post, theme }) => {
                 
         }
       </Card.Body>
-      <Card.Footer></Card.Footer>
+      <Card.Footer className="d-flex">
+        <LikeButton isLike={isLike} handleLike={handleLike} handleUnlike={handleUnlike} />
+
+        {
+          saved ? <BookmarkFill className="text-danger" onClick={handleUnsavePost} /> : <Bookmark onClick={handleSavePost} />
+        }
+      </Card.Footer>
     </Card>
   );
 };

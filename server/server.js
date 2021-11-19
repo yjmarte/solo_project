@@ -39,6 +39,6 @@ app.use("/api", require("./routes/notification.routes"));
 app.use("/api", require("./routes/comment.routes"));
 
 // INITIALIZE SERVER
-http.listen(process.env.PORT, () =>
+app.listen(process.env.PORT, () =>
   console.log(`Server initialized on port ${process.env.PORT}`)
 );

@@ -16,6 +16,7 @@ const Saved = ({ auth, dispatch }) => {
     setLoad(true);
     getAPI("saved", auth.token)
       .then((res) => {
+        console.log(res.data.saved)
         setSavedPosts(res.data.saved);
         setResult(res.data.result);
         setLoad(false);

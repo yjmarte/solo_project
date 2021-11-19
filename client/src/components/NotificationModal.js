@@ -9,8 +9,7 @@ import {
   deleteAllNotifications,
 } from "../redux/actions/notification.action";
 import { Row, Stack } from "react-bootstrap";
-import NoNotifications from "../images/notification.png";
-import { XCircle, XCircleFill } from 'react-bootstrap-icons'
+import { XCircle, XCircleFill } from "react-bootstrap-icons";
 
 const NotificationModal = () => {
   const { auth, notification } = useSelector((state) => state);

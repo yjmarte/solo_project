@@ -14,7 +14,6 @@ import { getNotifications } from "./redux/actions/notification.action";
 import Alert from "./components/alert/Alert";
 import Navigation from "./components/navbar/Navigation";
 import StatusModal from "./components/StatusModal";
-// import CallModal from "./components/message/CallModal";
 
 import Dashboard from "./views/Dashboard";
 import Login from "./views/Login";
@@ -23,21 +22,20 @@ import Register from "./views/Register";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Render from "./components/routing/Render";
 
-// import io from "socket.io-client";
+import io from "socket.io-client";
 import { GLOBAL_TYPES } from "./redux/actions/global.types";
-// import SocketClient from "./socket.client";
-// import Peer from "peerjs";
+import SocketClient from "./socket.client";
 
 function App() {
-  const { auth, status, modal, call } = useSelector((state) => state);
+  const { auth, status, modal } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(refreshToken());
 
-    // const socket = io();
-    // dispatch({ type: GLOBAL_TYPES.SOCKET, payload: socket });
-    // return () => socket.close();
+    const socket = io();
+    dispatch({ type: GLOBAL_TYPES.SOCKET, payload: socket });
+    return () => socket.close();
   }, [dispatch]);
 
   useEffect(() => {
@@ -59,15 +57,6 @@ function App() {
       });
     }
   }, []);
-
-  // useEffect(() => {
-  //   const newPeer = new Peer(undefined, {
-  //     path: "/",
-  //     secure: true,
-  //   });
-  //
-  //   dispatch({ type: GLOBAL_TYPES.PEER, payload: newPeer });
-  // }, [dispatch]);
 
   return (
     <Router>

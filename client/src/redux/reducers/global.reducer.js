@@ -5,9 +5,10 @@ import dashboardPosts from "./post.reducer";
 import modal from "./modal.reducer";
 import notification from "./notification.reducer";
 import postDetail from "./post.detail.reducer";
-import profile from './profile.reducer'
+import profile from "./profile.reducer";
+import socket from "./socket.reducer";
 import status from "./status.reducer";
-import suggestions from './suggestion.reducer'
+import suggestions from "./suggestion.reducer";
 import theme from "./theme.reducer";
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   notification,
   postDetail,
   profile,
+  socket,
   status,
   suggestions,
   theme,
